@@ -83,6 +83,7 @@ angular_multi_select.directive('angularMultiSelect',
 			attrs.buttonTemplate = attrs.buttonTemplate || "angular-multi-select-btn-count.htm";
 			attrs.buttonLabelSeparator = attrs.buttonLabelSeparator || '[", ", ""]';
 			attrs.minSearchLength = parseInt(attrs.minSearchLength, 10) || 3;
+			attrs.outputUnchecked = (typeof attrs.outputUnchecked === "undefined" || attrs.outputUnchecked === "false" ) ? false : true;
 
 			$scope.delayStart = parseInt(attrs.delayStart) || 0;
 			$scope.preselectProp = attrs.preselectProp || "";
@@ -937,7 +938,7 @@ angular_multi_select.directive('angularMultiSelect',
 					}
 
 					//If 'output-model-props' was specified, remove the keys we don't need
-					var _shadow = angular.copy(_tmp);
+					var _shadow = angular.copy(attrs.outputUnchecked ? $scope._shadowModel : _tmp);
 					if($scope.outputModelProps.length > 0) {
 						$scope._walk(_shadow, attrs.groupProperty, function(_item) {
 							angular.forEach(_item, function(v, k) {
